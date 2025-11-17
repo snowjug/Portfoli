@@ -30,6 +30,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
 }
 
 body {
@@ -51,16 +52,17 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: var(--transition);
 }
 
 [data-theme="dark"] .navbar {
-    background: rgba(0, 0, 0, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(29, 29, 31, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .nav-container {
@@ -92,6 +94,16 @@ body {
     font-weight: 400;
     transition: var(--transition);
     position: relative;
+    opacity: 0.8;
+}
+
+.nav-menu a:hover {
+    opacity: 1;
+}
+
+.nav-menu a.active {
+    opacity: 1;
+    color: var(--accent-color);
 }
 
 .nav-menu a::after {
@@ -301,10 +313,29 @@ body {
 }
 
 .highlight {
-    background: linear-gradient(135deg, var(--accent-color), #0077ed);
+    background: linear-gradient(135deg, #0071e3, #00a8ff, #0071e3);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradient-shift 3s ease infinite;
+}
+
+[data-theme="dark"] .highlight {
+    background: linear-gradient(135deg, #2997ff, #00d4ff, #2997ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 /* Typing Animation */
@@ -549,8 +580,12 @@ section {
 .quick-link-card:hover {
     background: var(--background);
     border-color: var(--accent-color);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(0, 113, 227, 0.2);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.25);
+}
+
+[data-theme="dark"] .quick-link-card:hover {
+    box-shadow: 0 12px 30px rgba(41, 151, 255, 0.3);
 }
 
 .quick-link-card:active {
@@ -603,11 +638,16 @@ section {
     padding: 40px 30px;
     border-radius: var(--border-radius);
     transition: var(--transition);
+    cursor: default;
 }
 
 .skill-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 113, 227, 0.15);
+}
+
+[data-theme="dark"] .skill-item:hover {
+    box-shadow: 0 25px 50px rgba(41, 151, 255, 0.2);
 }
 
 .skill-item h3 {
@@ -652,9 +692,13 @@ section {
 }
 
 .cert-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 113, 227, 0.2);
     border-color: var(--accent-color);
+}
+
+[data-theme="dark"] .cert-card:hover {
+    box-shadow: 0 20px 50px rgba(41, 151, 255, 0.25);
 }
 
 .cert-badge {
@@ -780,9 +824,13 @@ section {
 }
 
 .project-card:hover {
-    transform: translateX(8px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateX(10px) translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 113, 227, 0.2);
     border-color: var(--accent-color);
+}
+
+[data-theme="dark"] .project-card:hover {
+    box-shadow: 0 8px 30px rgba(41, 151, 255, 0.25);
 }
 
 .project-image {
@@ -890,9 +938,14 @@ section {
 }
 
 .contact-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0, 113, 227, 0.2);
     background: white;
+}
+
+[data-theme="dark"] .contact-card:hover {
+    background: #2d2d2d;
+    box-shadow: 0 25px 50px rgba(41, 151, 255, 0.25);
 }
 
 .contact-card svg {
