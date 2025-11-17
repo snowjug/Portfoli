@@ -1040,13 +1040,7 @@ section {
     }
 
     .floating-icon {
-        width: 45px;
-        height: 45px;
-    }
-
-    .floating-icon svg {
-        width: 24px;
-        height: 24px;
+        display: none;
     }
 
     .quick-links {
@@ -1056,5 +1050,48 @@ section {
     .quick-link-card {
         padding: 10px 18px;
         font-size: 0.9rem;
+    }
+}
+
+/* Tablet responsive - adjust floating icons */
+@media (max-width: 900px) and (min-width: 769px) {
+    .floating-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .floating-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .icon-1 {
+        top: -10px;
+        right: 10px;
+    }
+
+    .icon-2 {
+        top: 60px;
+        right: -10px;
+    }
+
+    .icon-3 {
+        bottom: 60px;
+        right: -10px;
+    }
+
+    .icon-4 {
+        bottom: -10px;
+        left: 10px;
+    }
+
+    .icon-5 {
+        bottom: 60px;
+        left: -10px;
+    }
+
+    .icon-6 {
+        top: 60px;
+        left: -10px;
     }
 }
