@@ -1040,7 +1040,43 @@ section {
     }
 
     .floating-icon {
-        display: none;
+        width: 40px;
+        height: 40px;
+    }
+
+    .floating-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .icon-1 {
+        top: -5px;
+        right: 5px;
+    }
+
+    .icon-2 {
+        top: 50px;
+        right: -5px;
+    }
+
+    .icon-3 {
+        bottom: 50px;
+        right: -5px;
+    }
+
+    .icon-4 {
+        bottom: -5px;
+        left: 5px;
+    }
+
+    .icon-5 {
+        bottom: 50px;
+        left: -5px;
+    }
+
+    .icon-6 {
+        top: 50px;
+        left: -5px;
     }
 
     .quick-links {
