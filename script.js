@@ -12,36 +12,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Smooth Reveal Animation for Name (120 FPS)
-const typingText = document.querySelector('.typing-text');
-if (typingText) {
-    const text = 'Atharv Shukla'; // Replace with your actual name
-    typingText.textContent = text;
-    typingText.style.opacity = '0';
-    
-    // Smooth fade and slide in animation
-    setTimeout(() => {
-        typingText.style.opacity = '1';
-        typingText.style.transform = 'translateX(0)';
-    }, 800);
-}
-
-// Navbar background on scroll
-const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll <= 0) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.8)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-    }
-    
-    lastScroll = currentScroll;
-});
-
 // Intersection Observer for scroll animations
 const observerOptions = {
     threshold: 0.1,
@@ -56,18 +26,6 @@ const observer = new IntersectionObserver((entries) => {
         }
     });
 }, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.skill-item, .project-card, .contact-card, .about-text');
-    
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(el);
-    });
-});
 
 // Add hover effect for project cards
 const projectCards = document.querySelectorAll('.project-card');
@@ -99,4 +57,71 @@ window.addEventListener('scroll', () => {
         hero.style.transform = `translateY(${scrolled * 0.5}px)`;
         hero.style.opacity = 1 - scrolled / 700;
     }
+});
+
+// Initialize everything on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    // Smooth Reveal Animation for Name
+    const typingText = document.querySelector('.typing-text');
+    if (typingText) {
+        const text = 'Atharv Shukla';
+        typingText.textContent = text;
+        typingText.style.opacity = '0';
+        
+        setTimeout(() => {
+            typingText.style.opacity = '1';
+            typingText.style.transform = 'translateX(0)';
+        }, 800);
+    }
+
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.skill-item, .project-card, .contact-card, .about-text, .cert-card');
+    
+    animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(el);
+    });
+
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    const navbar = document.querySelector('.navbar');
+    
+    // Check for saved theme preference or default to 'light' mode
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    
+    // Update navbar background based on theme and scroll
+    function updateNavbarBackground() {
+        const isDark = htmlElement.getAttribute('data-theme') === 'dark';
+        const currentScroll = window.pageYOffset;
+        
+        if (navbar) {
+            if (currentScroll <= 0) {
+                navbar.style.background = isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+            } else {
+                navbar.style.background = isDark ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+            }
+        }
+    }
+    
+    // Toggle theme
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateNavbarBackground();
+        });
+    }
+    
+    // Initialize navbar background
+    updateNavbarBackground();
+    
+    // Update navbar on scroll
+    window.addEventListener('scroll', updateNavbarBackground);
 });
