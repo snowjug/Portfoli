@@ -1091,26 +1091,106 @@ section {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .nav-container {
+        padding: 15px;
+    }
+
     .nav-menu {
-        gap: 20px;
+        gap: 15px;
     }
 
     .nav-menu a {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        padding: 8px 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .theme-toggle {
+        min-width: 44px;
+        min-height: 44px;
     }
 
     section {
-        padding: 80px 20px;
+        padding: 60px 15px;
+    }
+
+    .hero {
+        min-height: 100vh;
+        padding: 80px 15px 40px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1.1rem, 4vw, 1.5rem);
+        margin-bottom: 10px;
+    }
+
+    .hero-description {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+
+    .profile-image-wrapper {
+        width: 200px;
+        height: 200px;
+    }
+
+    .floating-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .floating-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .icon-1 {
+        top: -5px;
+        right: 5px;
+    }
+
+    .icon-2 {
+        top: 40px;
+        right: -5px;
+    }
+
+    .icon-3 {
+        bottom: 40px;
+        right: -5px;
+    }
+
+    .icon-4 {
+        bottom: -5px;
+        left: 5px;
+    }
+
+    .icon-5 {
+        bottom: 40px;
+        left: -5px;
+    }
+
+    .icon-6 {
+        top: 40px;
+        left: -5px;
     }
 
     .about-floating-icon {
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
     }
 
     .about-floating-icon svg {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
     }
 
     .about-icon-1 {
@@ -1143,61 +1223,158 @@ section {
         right: 3%;
     }
 
+    .quick-links {
+        gap: 10px;
+        margin-bottom: 40px;
+    }
+
+    .quick-link-card {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        min-height: 44px;
+    }
+
+    .quick-link-card svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .section-title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        margin-bottom: 40px;
+    }
+
     .skills {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .skill-item {
+        padding: 25px 20px;
+    }
+
+    .skill-item h3 {
+        font-size: 1.2rem;
+    }
+
+    .hero-cta {
+        gap: 12px;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 0.95rem;
+        min-height: 48px;
+    }
+
+    .cert-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .cert-card {
+        padding: 25px 20px;
+    }
+
+    .credly-button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
     }
 
     .project-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
+        padding: 20px;
+    }
+
+    .project-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .project-image svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .project-overlay h3 {
+        font-size: 1.2rem;
+    }
+
+    .project-overlay p {
+        font-size: 0.9rem;
     }
 
     .contact-links {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .contact-card {
+        padding: 25px 20px;
     }
 }
 
 @media (max-width: 480px) {
     .nav-container {
-        padding: 15px;
+        padding: 12px;
     }
 
     .nav-logo {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .nav-menu {
-        gap: 15px;
+        gap: 10px;
     }
 
-    .hero-cta {
-        flex-direction: column;
-        width: 100%;
+    .nav-menu a {
+        font-size: 0.8rem;
     }
 
-    .btn {
-        width: 100%;
+    section {
+        padding: 50px 12px;
+    }
+
+    .hero {
+        padding: 70px 12px 30px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1rem, 3.5vw, 1.3rem);
+    }
+
+    .hero-description {
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
     }
 
     .profile-image-wrapper {
-        width: 220px;
-        height: 220px;
+        width: 180px;
+        height: 180px;
     }
 
     .floating-icon {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
     }
 
     .floating-icon svg {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
     }
 
     .icon-1 {
-        top: -5px;
-        right: 5px;
+        top: -3px;
+        right: 3px;
     }
 
     .icon-2 {
