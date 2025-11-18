@@ -997,6 +997,46 @@ section {
         padding: 80px 20px;
     }
 
+    .about-floating-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .about-floating-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .about-icon-1 {
+        top: 8%;
+        left: 2%;
+    }
+
+    .about-icon-2 {
+        top: 20%;
+        right: 3%;
+    }
+
+    .about-icon-3 {
+        top: 45%;
+        left: 1%;
+    }
+
+    .about-icon-4 {
+        top: 45%;
+        right: 2%;
+    }
+
+    .about-icon-5 {
+        bottom: 25%;
+        left: 3%;
+    }
+
+    .about-icon-6 {
+        bottom: 20%;
+        right: 3%;
+    }
+
     .skills {
         grid-template-columns: 1fr;
     }
@@ -1129,5 +1169,45 @@ section {
     .icon-6 {
         top: 60px;
         left: -10px;
+    }
+
+    .about-floating-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .about-floating-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .about-icon-1 {
+        top: 9%;
+        left: 4%;
+    }
+
+    .about-icon-2 {
+        top: 22%;
+        right: 5%;
+    }
+
+    .about-icon-3 {
+        top: 48%;
+        left: 2%;
+    }
+
+    .about-icon-4 {
+        top: 48%;
+        right: 4%;
+    }
+
+    .about-icon-5 {
+        bottom: 22%;
+        left: 4%;
+    }
+
+    .about-icon-6 {
+        bottom: 18%;
+        right: 5%;
     }
 }
