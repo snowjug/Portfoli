@@ -1,3 +1,24 @@
+// Confetti celebration for Portfolio logo
+const portfolioLogo = document.querySelector('.nav-logo');
+if (portfolioLogo) {
+    portfolioLogo.style.cursor = 'pointer';
+    portfolioLogo.addEventListener('click', function() {
+        // Trigger confetti
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.1 },
+            colors: ['#0071e3', '#00d4ff', '#ff3b30', '#ffcc00', '#34c759']
+        });
+        
+        // Scroll to home smoothly
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
 // Smooth scroll for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

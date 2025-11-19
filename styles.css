@@ -513,82 +513,7 @@ section {
     position: relative;
 }
 
-/* About Floating Icons */
-.about-floating-icons {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.about-floating-icon {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: white;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    transition: var(--transition);
-}
-
-[data-theme="dark"] .about-floating-icon {
-    background: #2d2d2d;
-    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
-}
-
-.about-floating-icon svg {
-    width: 26px;
-    height: 26px;
-    color: var(--accent-color);
-}
-
-.about-icon-1 {
-    top: 10%;
-    left: 5%;
-    animation: float 4s ease-in-out infinite;
-}
-
-.about-icon-2 {
-    top: 25%;
-    right: 8%;
-    animation: float 4.5s ease-in-out infinite 0.5s;
-}
-
-.about-icon-3 {
-    top: 50%;
-    left: 3%;
-    animation: float 5s ease-in-out infinite 1s;
-}
-
-.about-icon-4 {
-    top: 50%;
-    right: 5%;
-    animation: float 4.2s ease-in-out infinite 1.5s;
-}
-
-.about-icon-5 {
-    bottom: 20%;
-    left: 6%;
-    animation: float 4.8s ease-in-out infinite 2s;
-}
-
-.about-icon-6 {
-    bottom: 15%;
-    right: 7%;
-    animation: float 4.3s ease-in-out infinite 2.5s;
-}
-
-/* Ensure content is above floating icons */
-.about .container {
-    position: relative;
-    z-index: 1;
-}
+/* About Section - No floating icons */
 
 /* Stats Counter */
 .stats-container {
@@ -675,8 +600,13 @@ section {
 .quick-link-card svg {
     width: 24px;
     height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
     color: var(--accent-color);
     transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .quick-link-card:hover svg {
@@ -798,6 +728,11 @@ section {
     border: 2px solid #e5e5e5;
 }
 
+.microsoft-badge svg {
+    width: 48px;
+    height: 48px;
+}
+
 [data-theme="dark"] .microsoft-badge {
     background: #2d2d2d;
     border-color: #404040;
@@ -892,6 +827,7 @@ section {
 .credly-button svg {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
 }
 
 /* Projects Section */
@@ -1053,8 +989,11 @@ section {
 }
 
 .contact-card svg {
+    width: 40px;
+    height: 40px;
     color: var(--accent-color);
     transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .contact-card:hover svg {
@@ -1118,7 +1057,7 @@ section {
 
     .hero {
         min-height: 100vh;
-        padding: 80px 15px 40px;
+        padding: 60px 15px 40px;
     }
 
     .hero-title {
@@ -1183,60 +1122,30 @@ section {
         left: -5px;
     }
 
-    .about-floating-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .about-floating-icon svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .about-icon-1 {
-        top: 8%;
-        left: 2%;
-    }
-
-    .about-icon-2 {
-        top: 20%;
-        right: 3%;
-    }
-
-    .about-icon-3 {
-        top: 45%;
-        left: 1%;
-    }
-
-    .about-icon-4 {
-        top: 45%;
-        right: 2%;
-    }
-
-    .about-icon-5 {
-        bottom: 25%;
-        left: 3%;
-    }
-
-    .about-icon-6 {
-        bottom: 20%;
-        right: 3%;
-    }
-
     .quick-links {
         gap: 10px;
         margin-bottom: 40px;
     }
 
     .quick-link-card {
-        padding: 10px 16px;
-        font-size: 0.85rem;
+        padding: 10px 14px;
+        font-size: 0.8rem;
         min-height: 44px;
+        gap: 8px;
+    }
+
+    .quick-link-card span {
+        font-size: 0.8rem;
     }
 
     .quick-link-card svg {
-        width: 20px;
-        height: 20px;
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        min-height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+        flex-shrink: 0;
     }
 
     .section-title {
@@ -1280,6 +1189,26 @@ section {
         padding: 25px 20px;
     }
 
+    .cert-badge {
+        width: 70px;
+        height: 70px;
+    }
+
+    .microsoft-badge svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .cert-download svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .credly-button svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
     .credly-button {
         padding: 12px 24px;
         font-size: 0.9rem;
@@ -1298,8 +1227,48 @@ section {
     }
 
     .project-image svg {
-        width: 40px;
-        height: 40px;
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .cert-badge {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .microsoft-badge svg {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .cert-download svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .credly-button {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    .credly-button svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .contact-card svg {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .cert-download {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .credly-button {
+        padding: 12px 24px;
+        font-size: 0.9rem;
     }
 
     .project-overlay h3 {
@@ -1317,6 +1286,31 @@ section {
 
     .contact-card {
         padding: 25px 20px;
+    }
+
+    .contact-card svg {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .cert-badge {
+        width: 70px;
+        height: 70px;
+    }
+
+    .microsoft-badge svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .cert-download svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .credly-button svg {
+        width: 18px !important;
+        height: 18px !important;
     }
 }
 
@@ -1342,7 +1336,7 @@ section {
     }
 
     .hero {
-        padding: 70px 12px 30px;
+        padding: 55px 12px 30px;
     }
 
     .hero-title {
@@ -1407,8 +1401,18 @@ section {
     }
 
     .quick-link-card {
-        padding: 10px 18px;
-        font-size: 0.9rem;
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+
+    .quick-link-card svg {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
     }
 }
 
@@ -1454,43 +1458,4 @@ section {
         left: -10px;
     }
 
-    .about-floating-icon {
-        width: 42px;
-        height: 42px;
-    }
-
-    .about-floating-icon svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    .about-icon-1 {
-        top: 9%;
-        left: 4%;
-    }
-
-    .about-icon-2 {
-        top: 22%;
-        right: 5%;
-    }
-
-    .about-icon-3 {
-        top: 48%;
-        left: 2%;
-    }
-
-    .about-icon-4 {
-        top: 48%;
-        right: 4%;
-    }
-
-    .about-icon-5 {
-        bottom: 22%;
-        left: 4%;
-    }
-
-    .about-icon-6 {
-        bottom: 18%;
-        right: 5%;
-    }
 }
