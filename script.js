@@ -197,25 +197,8 @@ function initVisitorStats() {
         animateCount(countElement, visitorCount);
     }
     
-    // Update visit history
-    const today = new Date().toLocaleDateString();
-    const todayVisit = visitHistory.find(v => v.date === today);
-    
-    if (todayVisit) {
-        todayVisit.count++;
-    } else {
-        visitHistory.push({ date: today, count: 1 });
-    }
-    
-    // Keep only last 7 days
-    if (visitHistory.length > 7) {
-        visitHistory = visitHistory.slice(-7);
-    }
-    
-    localStorage.setItem('visitHistory', JSON.stringify(visitHistory));
-    
-    // Draw graph
-    drawVisitorGraph(visitHistory);
+    // Draw exponential graph from 0 to current visitor count
+    drawVisitorGraph(visitorCount);
 }
 
 function animateCount(element, target) {
@@ -232,22 +215,35 @@ function animateCount(element, target) {
     }, 20);
 }
 
-function drawVisitorGraph(history) {
+function drawVisitorGraph(targetCount) {
     const canvas = document.getElementById('visitorChart');
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
     const rect = canvas.parentElement.getBoundingClientRect();
     
-    // Set canvas size
-    canvas.width = rect.width - 60;
-    canvas.height = rect.height - 60;
+    // Set high-resolution canvas for crisp rendering
+    const dpr = window.devicePixelRatio || 1;
+    const displayWidth = rect.width - 60;
+    const displayHeight = rect.height - 60;
     
-    const width = canvas.width;
-    const height = canvas.height;
+    canvas.width = displayWidth * dpr;
+    canvas.height = displayHeight * dpr;
+    canvas.style.width = displayWidth + 'px';
+    canvas.style.height = displayHeight + 'px';
+    
+    // Scale context to match device pixel ratio
+    ctx.scale(dpr, dpr);
+    
+    const width = displayWidth;
+    const height = displayHeight;
     const padding = 40;
     const graphWidth = width - padding * 2;
     const graphHeight = height - padding * 2;
+    
+    // Enable anti-aliasing and smooth rendering
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     
     // Get theme colors
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -258,16 +254,9 @@ function drawVisitorGraph(history) {
     
     ctx.clearRect(0, 0, width, height);
     
-    if (history.length === 0) {
-        ctx.fillStyle = textColor;
-        ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
-        ctx.textAlign = 'center';
-        ctx.fillText('No data yet', width / 2, height / 2);
-        return;
-    }
-    
-    // Find max value for scaling
-    const maxCount = Math.max(...history.map(h => h.count), 5);
+    // Generate exponential curve from 0 to targetCount
+    const numPoints = 50;
+    const maxCount = targetCount;
     
     // Draw grid lines
     ctx.strokeStyle = gridColor;
@@ -288,63 +277,63 @@ function drawVisitorGraph(history) {
         ctx.fillText(value.toString(), padding - 10, y + 4);
     }
     
-    // Calculate points
-    const points = history.map((item, index) => {
-        const x = padding + (graphWidth / (history.length - 1 || 1)) * index;
-        const y = padding + graphHeight - (item.count / maxCount) * graphHeight;
-        return { x, y, date: item.date, count: item.count };
-    });
+    // Generate exponential curve points
+    const curvePoints = [];
+    for (let i = 0; i < numPoints; i++) {
+        const t = i / (numPoints - 1); // 0 to 1
+        const x = padding + graphWidth * t;
+        
+        // Exponential growth: y = a * (e^(k*t) - 1) where k controls growth rate
+        const k = 3; // Growth rate (higher = steeper curve)
+        const normalizedValue = (Math.exp(k * t) - 1) / (Math.exp(k) - 1);
+        const count = normalizedValue * maxCount;
+        const y = padding + graphHeight - (count / maxCount) * graphHeight;
+        
+        curvePoints.push({ x, y, count });
+    }
     
     // Draw filled area
     ctx.beginPath();
-    ctx.moveTo(points[0].x, height - padding);
+    ctx.moveTo(curvePoints[0].x, height - padding);
     
-    points.forEach(point => {
+    curvePoints.forEach(point => {
         ctx.lineTo(point.x, point.y);
     });
     
-    ctx.lineTo(points[points.length - 1].x, height - padding);
+    ctx.lineTo(curvePoints[curvePoints.length - 1].x, height - padding);
     ctx.closePath();
     ctx.fillStyle = fillColor;
     ctx.fill();
     
-    // Draw line
+    // Draw smooth curve line
     ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
+    ctx.moveTo(curvePoints[0].x, curvePoints[0].y);
     
-    points.forEach(point => {
+    curvePoints.forEach(point => {
         ctx.lineTo(point.x, point.y);
     });
     
     ctx.strokeStyle = lineColor;
     ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
     ctx.stroke();
     
-    // Draw points and labels
-    points.forEach((point, index) => {
-        // Point circle
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = lineColor;
-        ctx.fill();
-        
-        // Date label
-        const dateLabel = point.date.split('/').slice(0, 2).join('/');
-        ctx.fillStyle = textColor;
-        ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
-        ctx.textAlign = 'center';
-        ctx.save();
-        ctx.translate(point.x, height - padding + 20);
-        ctx.rotate(-Math.PI / 6);
-        ctx.fillText(dateLabel, 0, 0);
-        ctx.restore();
-    });
+    // Draw end point circle
+    const endPoint = curvePoints[curvePoints.length - 1];
+    ctx.beginPath();
+    ctx.arc(endPoint.x, endPoint.y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = lineColor;
+    ctx.fill();
+    ctx.strokeStyle = isDark ? '#000' : '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
     
     // Title
     ctx.fillStyle = textColor;
     ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
     ctx.textAlign = 'left';
-    ctx.fillText('Visits (Last 7 Days)', padding, 20);
+    ctx.fillText('Growth Trajectory', padding, 20);
 }
 
 // Initialize visitor stats on page load
@@ -355,8 +344,8 @@ const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
     themeToggle.addEventListener('click', () => {
         setTimeout(() => {
-            const visitHistory = JSON.parse(localStorage.getItem('visitHistory') || '[]');
-            drawVisitorGraph(visitHistory);
+            const visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+            drawVisitorGraph(visitorCount);
         }, 100);
     });
 }
