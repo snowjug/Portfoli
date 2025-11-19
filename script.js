@@ -175,3 +175,188 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set active link on page load
     setActiveLink();
 });
+
+// Visitor Counter and Graph
+function initVisitorStats() {
+    // Get or initialize visitor count from localStorage
+    let visitorCount = localStorage.getItem('visitorCount');
+    let visitHistory = JSON.parse(localStorage.getItem('visitHistory') || '[]');
+    
+    if (!visitorCount) {
+        visitorCount = Math.floor(Math.random() * 500) + 100; // Start with random count
+    } else {
+        visitorCount = parseInt(visitorCount) + 1;
+    }
+    
+    // Save updated count
+    localStorage.setItem('visitorCount', visitorCount);
+    
+    // Update visitor count display
+    const countElement = document.getElementById('visitorCount');
+    if (countElement) {
+        animateCount(countElement, visitorCount);
+    }
+    
+    // Update visit history
+    const today = new Date().toLocaleDateString();
+    const todayVisit = visitHistory.find(v => v.date === today);
+    
+    if (todayVisit) {
+        todayVisit.count++;
+    } else {
+        visitHistory.push({ date: today, count: 1 });
+    }
+    
+    // Keep only last 7 days
+    if (visitHistory.length > 7) {
+        visitHistory = visitHistory.slice(-7);
+    }
+    
+    localStorage.setItem('visitHistory', JSON.stringify(visitHistory));
+    
+    // Draw graph
+    drawVisitorGraph(visitHistory);
+}
+
+function animateCount(element, target) {
+    let current = 0;
+    const increment = target / 50;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target.toLocaleString();
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current).toLocaleString();
+        }
+    }, 20);
+}
+
+function drawVisitorGraph(history) {
+    const canvas = document.getElementById('visitorChart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.parentElement.getBoundingClientRect();
+    
+    // Set canvas size
+    canvas.width = rect.width - 60;
+    canvas.height = rect.height - 60;
+    
+    const width = canvas.width;
+    const height = canvas.height;
+    const padding = 40;
+    const graphWidth = width - padding * 2;
+    const graphHeight = height - padding * 2;
+    
+    // Get theme colors
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#f5f5f7' : '#1d1d1f';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+    const lineColor = '#0071e3';
+    const fillColor = isDark ? 'rgba(41, 151, 255, 0.2)' : 'rgba(0, 113, 227, 0.2)';
+    
+    ctx.clearRect(0, 0, width, height);
+    
+    if (history.length === 0) {
+        ctx.fillStyle = textColor;
+        ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.textAlign = 'center';
+        ctx.fillText('No data yet', width / 2, height / 2);
+        return;
+    }
+    
+    // Find max value for scaling
+    const maxCount = Math.max(...history.map(h => h.count), 5);
+    
+    // Draw grid lines
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    
+    for (let i = 0; i <= 5; i++) {
+        const y = padding + (graphHeight / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+        
+        // Y-axis labels
+        const value = Math.round(maxCount - (maxCount / 5) * i);
+        ctx.fillStyle = textColor;
+        ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.textAlign = 'right';
+        ctx.fillText(value.toString(), padding - 10, y + 4);
+    }
+    
+    // Calculate points
+    const points = history.map((item, index) => {
+        const x = padding + (graphWidth / (history.length - 1 || 1)) * index;
+        const y = padding + graphHeight - (item.count / maxCount) * graphHeight;
+        return { x, y, date: item.date, count: item.count };
+    });
+    
+    // Draw filled area
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, height - padding);
+    
+    points.forEach(point => {
+        ctx.lineTo(point.x, point.y);
+    });
+    
+    ctx.lineTo(points[points.length - 1].x, height - padding);
+    ctx.closePath();
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+    
+    // Draw line
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    
+    points.forEach(point => {
+        ctx.lineTo(point.x, point.y);
+    });
+    
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    // Draw points and labels
+    points.forEach((point, index) => {
+        // Point circle
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = lineColor;
+        ctx.fill();
+        
+        // Date label
+        const dateLabel = point.date.split('/').slice(0, 2).join('/');
+        ctx.fillStyle = textColor;
+        ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.textAlign = 'center';
+        ctx.save();
+        ctx.translate(point.x, height - padding + 20);
+        ctx.rotate(-Math.PI / 6);
+        ctx.fillText(dateLabel, 0, 0);
+        ctx.restore();
+    });
+    
+    // Title
+    ctx.fillStyle = textColor;
+    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+    ctx.textAlign = 'left';
+    ctx.fillText('Visits (Last 7 Days)', padding, 20);
+}
+
+// Initialize visitor stats on page load
+window.addEventListener('load', initVisitorStats);
+
+// Redraw graph on theme change
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        setTimeout(() => {
+            const visitHistory = JSON.parse(localStorage.getItem('visitHistory') || '[]');
+            drawVisitorGraph(visitHistory);
+        }, 100);
+    });
+}

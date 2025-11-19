@@ -1011,6 +1011,70 @@ section {
     font-size: 0.95rem;
 }
 
+/* Visitor Stats Section */
+.visitor-stats {
+    background: var(--card-background);
+    padding: 60px 20px;
+    margin-top: 80px;
+}
+
+.stats-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--text-primary);
+}
+
+.stats-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.visitor-count {
+    background: var(--background);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.count-display {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.count-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.count-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+}
+
+.visitor-graph {
+    background: var(--background);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: 300px;
+}
+
+#visitorChart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 /* Footer */
 .footer {
     background: var(--secondary-color);
@@ -1394,6 +1458,34 @@ section {
     .icon-6 {
         top: 50px;
         left: -5px;
+    }
+
+    .visitor-stats {
+        padding: 40px 15px;
+        margin-top: 40px;
+    }
+
+    .stats-title {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .stats-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .visitor-count {
+        padding: 30px;
+    }
+
+    .count-number {
+        font-size: 2.5rem;
+    }
+
+    .visitor-graph {
+        height: 250px;
+        padding: 20px;
     }
 
     .quick-links {
