@@ -1,3 +1,148 @@
+// Skills Radar Chart
+function drawSkillsRadar() {
+    const canvas = document.getElementById('skillsRadar');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    
+    // High-DPI support
+    const dpr = window.devicePixelRatio || 1;
+    const size = Math.min(rect.width, rect.height);
+    
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+    
+    ctx.scale(dpr, dpr);
+    
+    const centerX = size / 2;
+    const centerY = size / 2;
+    const radius = size * 0.35;
+    
+    // Skills data
+    const skills = [
+        { name: 'Cloud Platforms', value: 90 },
+        { name: 'DevSecOps', value: 85 },
+        { name: 'Containers', value: 88 },
+        { name: 'IaC', value: 92 },
+        { name: 'CI/CD', value: 87 },
+        { name: 'Monitoring', value: 83 }
+    ];
+    
+    const numSkills = skills.length;
+    const angleStep = (Math.PI * 2) / numSkills;
+    
+    // Get theme colors
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#f5f5f7' : '#1d1d1f';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)';
+    const fillColor = isDark ? 'rgba(41, 151, 255, 0.3)' : 'rgba(0, 113, 227, 0.3)';
+    const lineColor = '#0071e3';
+    
+    ctx.clearRect(0, 0, size, size);
+    
+    // Draw concentric circles (grid)
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    for (let i = 1; i <= 5; i++) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, (radius / 5) * i, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+    
+    // Draw axes
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    for (let i = 0; i < numSkills; i++) {
+        const angle = i * angleStep - Math.PI / 2;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+    
+    // Draw data polygon
+    ctx.beginPath();
+    skills.forEach((skill, i) => {
+        const angle = i * angleStep - Math.PI / 2;
+        const value = (skill.value / 100) * radius;
+        const x = centerX + value * Math.cos(angle);
+        const y = centerY + value * Math.sin(angle);
+        
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    ctx.closePath();
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw points
+    skills.forEach((skill, i) => {
+        const angle = i * angleStep - Math.PI / 2;
+        const value = (skill.value / 100) * radius;
+        const x = centerX + value * Math.cos(angle);
+        const y = centerY + value * Math.sin(angle);
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = lineColor;
+        ctx.fill();
+        ctx.strokeStyle = isDark ? '#000' : '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    });
+    
+    // Draw labels
+    ctx.fillStyle = textColor;
+    ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+    ctx.textAlign = 'center';
+    
+    skills.forEach((skill, i) => {
+        const angle = i * angleStep - Math.PI / 2;
+        const labelRadius = radius + 30;
+        const x = centerX + labelRadius * Math.cos(angle);
+        const y = centerY + labelRadius * Math.sin(angle);
+        
+        // Adjust text alignment based on position
+        if (Math.abs(angle) < 0.1 || Math.abs(angle - Math.PI) < 0.1) {
+            ctx.textAlign = angle < 0 ? 'left' : 'right';
+        } else {
+            ctx.textAlign = 'center';
+        }
+        
+        ctx.fillText(skill.name, x, y + 4);
+    });
+}
+
+// Initialize radar chart
+window.addEventListener('load', () => {
+    drawSkillsRadar();
+});
+
+// Redraw on theme change
+const radarThemeToggle = document.getElementById('themeToggle');
+if (radarThemeToggle) {
+    radarThemeToggle.addEventListener('click', () => {
+        setTimeout(drawSkillsRadar, 100);
+    });
+}
+
+// Redraw on window resize
+window.addEventListener('resize', () => {
+    drawSkillsRadar();
+});
+
 // Confetti celebration for Portfolio logo
 const portfolioLogo = document.querySelector('.nav-logo');
 if (portfolioLogo) {
