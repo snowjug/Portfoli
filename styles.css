@@ -1588,12 +1588,12 @@ section {
 
     .tech-item svg,
     .tech-item img.tech-icon {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
     }
 
     .tech-item span {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .project-image {
