@@ -99,6 +99,7 @@ body {
 
 .nav-menu a:hover {
     opacity: 1;
+    color: var(--accent-color);
 }
 
 .nav-menu a.active {
@@ -116,10 +117,6 @@ body {
     height: 2px;
     background: var(--accent-color);
     transition: var(--transition);
-}
-
-.nav-menu a:hover {
-    color: var(--accent-color);
 }
 
 .nav-menu a:hover::after {
@@ -874,8 +871,8 @@ section {
 }
 
 .project-image {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 10px;
     background: var(--accent-color);
     flex-shrink: 0;
@@ -891,6 +888,12 @@ section {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+}
+
+.project-image img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
 }
 
 .project-card:nth-child(1) .project-image {
@@ -1138,6 +1141,7 @@ section {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    animation: fadeInUp 0.6s ease forwards;
 }
 
 .tech-item::before {
@@ -1202,11 +1206,6 @@ section {
 [data-theme="dark"] .tech-item[data-tech="github"] svg { color: #ffffff; }
 
 /* Animation for tech items */
-.tech-item {
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0;
-}
-
 .tech-item:nth-child(1) { animation-delay: 0.1s; }
 .tech-item:nth-child(2) { animation-delay: 0.15s; }
 .tech-item:nth-child(3) { animation-delay: 0.2s; }
@@ -1442,13 +1441,14 @@ section {
     }
 
     .project-image {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
 
-    .project-image svg {
-        width: 40px !important;
-        height: 40px !important;
+    .project-image svg,
+    .project-image img {
+        width: 60px !important;
+        height: 60px !important;
     }
 
     .cert-badge {
@@ -1588,12 +1588,23 @@ section {
 
     .tech-item svg,
     .tech-item img.tech-icon {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
     }
 
     .tech-item span {
         font-size: 0.75rem;
+    }
+
+    .project-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .project-image svg,
+    .project-image img {
+        width: 50px !important;
+        height: 50px !important;
     }
 
     #skillsRadar {
