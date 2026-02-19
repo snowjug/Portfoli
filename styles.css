@@ -838,16 +838,18 @@ section {
     align-items: center;
     justify-content: center;
     padding: 10px;
+    overflow: hidden;
 }
 
 [data-theme="dark"] .oracle-badge {
-    background: #2d2d2d;
-    border-color: #404040;
+    background: #f8f8f8;
+    border-color: #d8d8d8;
 }
 
-.oracle-badge svg {
-    max-width: 100%;
+.oracle-logo-img {
+    width: 88px;
     height: auto;
+    object-fit: contain;
 }
 
 .cert-card h3 {
@@ -1090,10 +1092,18 @@ section {
 
 /* Specific Project Gradients */
 .project-card:nth-child(1) .project-header { background: linear-gradient(135deg, #FF9900 0%, #FFCC00 100%); } /* OpenStack - Orange */
-.project-card:nth-child(2) .project-header { background: linear-gradient(135deg, #343434 0%, #5d5d5d 100%); } /* Stickly - Dark */
+.project-card:nth-child(2) .project-header { background: linear-gradient(135deg, #2b3448 0%, #4f6ea5 55%, #6ea8ff 100%); } /* Stickly - Improved */
 .project-card:nth-child(3) .project-header { background: linear-gradient(135deg, #4EAA25 0%, #87CD33 100%); } /* CoinDonation - Green */
 .project-card:nth-child(4) .project-header { background: linear-gradient(135deg, #E34F26 0%, #F06529 100%); } /* Portfolio - Orange/Red */
 .project-card:nth-child(5) .project-header { background: linear-gradient(135deg, #3776AB 0%, #5A9FD4 100%); } /* NeuroCynx - Blue */
+
+.project-card:nth-child(3) .project-icon {
+    filter: contrast(1.18) saturate(1.12) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 8px;
+}
 
 [data-theme="dark"] .project-card:nth-child(2) .project-header {
     background: linear-gradient(135deg, #1f2a44 0%, #2f4f8a 55%, #3b82f6 100%);
@@ -1132,7 +1142,11 @@ section {
     text-align: center;
     font-size: 1.25rem;
     color: var(--text-secondary);
-    margin-bottom: 60px;
+    margin-bottom: 40px;
+}
+
+.contact .section-title {
+    margin-bottom: 14px;
 }
 
 .contact-links {
@@ -1673,30 +1687,30 @@ section {
     }
 
     .skills {
-        font-size: clamp(1.9rem, 8.4vw, 2.35rem);
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 
-        font-size: clamp(1.2rem, 4.6vw, 1.5rem);
+    .skill-item {
         padding: 25px 20px;
     }
 
-        font-size: clamp(1.05rem, 3.8vw, 1.15rem);
+    .skill-item h3 {
         font-size: 1.2rem;
     }
 
-        width: 220px;
-        height: 220px;
+    .hero-cta {
+        gap: 12px;
         flex-direction: column;
         width: 100%;
         padding: 0 15px;
-        width: 40px;
-        height: 40px;
+    }
+
     .btn {
         width: 100%;
         padding: 14px 24px;
-        width: 20px;
-        height: 20px;
+        font-size: 0.95rem;
+        min-height: 48px;
     }
 
     .cert-grid {
