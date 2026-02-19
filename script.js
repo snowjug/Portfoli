@@ -327,6 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavMenu = document.getElementById('mobileNavMenu');
     const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const backToTopContainer = document.getElementById('backToTopContainer');
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    const backToTopMenu = document.getElementById('backToTopMenu');
 
     function setMobileMenuState(isOpen) {
         document.body.classList.toggle('mobile-nav-open', isOpen);
@@ -336,12 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobileMenuToggle && mobileNavMenu && mobileNavOverlay) {
-        mobileMenuToggle.addEventListener('click', () => {
-            const isOpen = document.body.classList.contains('mobile-nav-open');
-            setMobileMenuState(!isOpen);
-        });
-
-        document.addEventListener('pointerdown', (event) => {
+        const closeOnOutsideInteraction = (event) => {
             if (!document.body.classList.contains('mobile-nav-open')) {
                 return;
             }
@@ -356,7 +354,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             setMobileMenuState(false);
+        };
+
+        mobileMenuToggle.addEventListener('click', () => {
+            const isOpen = document.body.classList.contains('mobile-nav-open');
+            setMobileMenuState(!isOpen);
         });
+
+        document.addEventListener('pointerdown', closeOnOutsideInteraction);
+        document.addEventListener('click', closeOnOutsideInteraction, true);
+        document.addEventListener('touchstart', closeOnOutsideInteraction, { passive: true });
 
         mobileNavOverlay.addEventListener('click', () => {
             setMobileMenuState(false);
@@ -377,6 +384,74 @@ document.addEventListener('DOMContentLoaded', () => {
         globalThis.addEventListener('resize', () => {
             if (globalThis.innerWidth > 768) {
                 setMobileMenuState(false);
+            }
+        });
+    }
+
+    if (backToTopBtn && backToTopContainer && backToTopMenu) {
+        const closeQuickNavMenu = () => {
+            backToTopContainer.classList.remove('open');
+            backToTopBtn.setAttribute('aria-expanded', 'false');
+            backToTopMenu.setAttribute('aria-hidden', 'true');
+        };
+
+        const toggleQuickNavMenu = () => {
+            const willOpen = !backToTopContainer.classList.contains('open');
+            backToTopContainer.classList.toggle('open', willOpen);
+            backToTopBtn.setAttribute('aria-expanded', String(willOpen));
+            backToTopMenu.setAttribute('aria-hidden', String(!willOpen));
+        };
+
+        const scrollToSection = (sectionId) => {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+
+            if (sectionId === 'home') {
+                globalThis.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        const toggleBackToTop = () => {
+            const isVisible = globalThis.scrollY > 320;
+            backToTopContainer.classList.toggle('show', isVisible);
+            if (!isVisible) {
+                closeQuickNavMenu();
+            }
+        };
+
+        toggleBackToTop();
+        globalThis.addEventListener('scroll', toggleBackToTop, { passive: true });
+
+        backToTopBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            toggleQuickNavMenu();
+        });
+
+        backToTopMenu.querySelectorAll('.back-to-top-option').forEach((menuOption) => {
+            menuOption.addEventListener('click', () => {
+                const targetSectionId = menuOption.dataset.target || 'home';
+                scrollToSection(targetSectionId);
+                closeQuickNavMenu();
+            });
+        });
+
+        document.addEventListener('pointerdown', (event) => {
+            if (!backToTopContainer.classList.contains('open')) {
+                return;
+            }
+
+            const target = event.target;
+            if (target instanceof Element && !backToTopContainer.contains(target)) {
+                closeQuickNavMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeQuickNavMenu();
             }
         });
     }
