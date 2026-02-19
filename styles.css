@@ -1,4 +1,6 @@
-﻿/* Reset & Base Styles */
+﻿@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,6 +8,8 @@
 }
 
 :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Manrope", "SF Pro Display", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --primary-color: #000000;
     --secondary-color: #1d1d1f;
     --accent-color: #0071e3;
@@ -34,7 +38,7 @@ html {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: var(--font-sans);
     line-height: 1.6;
     color: var(--text-primary);
     background: var(--background);
@@ -71,39 +75,54 @@ section > .container,
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     z-index: 1000;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: none;
     transition: var(--transition);
 }
 
 [data-theme="dark"] .navbar {
-    background: rgba(29, 29, 31, 0.72);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: transparent;
+    border-bottom: none;
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    width: calc(100% - 20px);
+    max-width: none;
+    margin: 10px auto 0;
+    padding: 12px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 28px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.44) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    border-radius: 999px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    backdrop-filter: saturate(145%) blur(18px);
+    -webkit-backdrop-filter: saturate(145%) blur(18px);
+}
+
+[data-theme="dark"] .nav-container {
+    background: linear-gradient(135deg, rgba(34, 34, 38, 0.66) 0%, rgba(20, 20, 24, 0.58) 100%);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .nav-logo {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 700;
     color: var(--primary-color);
-    letter-spacing: -0.5px;
+    letter-spacing: -0.25px;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 40px;
+    gap: 30px;
     align-items: center;
 }
 
@@ -142,11 +161,23 @@ section > .container,
 .nav-menu a {
     text-decoration: none;
     color: var(--text-primary);
-    font-size: 0.95rem;
-    font-weight: 400;
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: 0.35px;
     transition: var(--transition);
     position: relative;
-    opacity: 0.8;
+    opacity: 0.95;
+    font-family: var(--font-display);
+}
+
+.hero-title,
+.hero-subtitle,
+.section-title,
+.project-content h3,
+.contact-card h3,
+.skill-item h3,
+.cert-card h3 {
+    font-family: var(--font-display);
 }
 
 .nav-menu a:hover {
@@ -618,13 +649,15 @@ section {
     align-items: center;
     gap: 10px;
     padding: 12px 24px;
-    background: var(--card-background);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.66) 0%, rgba(245, 245, 247, 0.56) 100%);
     border-radius: 50px;
     text-decoration: none;
     color: var(--text-primary);
     font-weight: 500;
     transition: var(--transition);
-    border: 2px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
     cursor: pointer;
     position: relative;
     z-index: 10;
@@ -693,21 +726,23 @@ section {
 }
 
 .skill-item {
-    background: linear-gradient(165deg, rgba(255, 255, 255, 0.95) 0%, var(--card-background) 100%);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.66) 0%, rgba(245, 245, 247, 0.54) 100%);
     padding: 40px 30px;
     border-radius: var(--border-radius);
     transition: var(--transition);
     cursor: default;
-    border: 1px solid rgba(0, 113, 227, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.64);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+    backdrop-filter: saturate(145%) blur(10px);
+    -webkit-backdrop-filter: saturate(145%) blur(10px);
 }
 
 [data-theme="dark"] .skill-item {
-    background: linear-gradient(160deg, rgba(38, 38, 42, 0.95) 0%, rgba(26, 26, 30, 0.95) 100%);
-    border: 1px solid rgba(41, 151, 255, 0.2);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(160deg, rgba(38, 38, 42, 0.64) 0%, rgba(26, 26, 30, 0.58) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .skill-item::before {
@@ -779,19 +814,22 @@ section {
 }
 
 .cert-card {
-    background: var(--background);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.68) 0%, rgba(245, 245, 247, 0.56) 100%);
     border-radius: 16px;
     padding: 30px;
     text-align: center;
     transition: var(--transition);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.66);
     display: flex;
     flex-direction: column;
     align-items: center;
+    backdrop-filter: saturate(145%) blur(10px);
+    -webkit-backdrop-filter: saturate(145%) blur(10px);
 }
 
 [data-theme="dark"] .cert-card {
-    border-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(160deg, rgba(38, 38, 42, 0.64) 0%, rgba(26, 26, 30, 0.58) 100%);
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .cert-card:hover {
@@ -968,9 +1006,9 @@ section {
 }
 
 .project-card {
-    background: var(--card-background);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.68) 0%, rgba(245, 245, 247, 0.56) 100%);
     border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.66);
     overflow: hidden;
     text-decoration: none;
     color: var(--text-primary);
@@ -979,10 +1017,15 @@ section {
     flex-direction: column;
     height: 100%;
     position: relative;
+    backdrop-filter: saturate(145%) blur(10px);
+    -webkit-backdrop-filter: saturate(145%) blur(10px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.36);
 }
 
 [data-theme="dark"] .project-card {
-    border-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(160deg, rgba(38, 38, 42, 0.66) 0%, rgba(26, 26, 30, 0.58) 100%);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .project-card:hover {
@@ -1136,6 +1179,7 @@ section {
 /* Contact Section */
 .contact {
     background: var(--background);
+    padding-top: 72px;
 }
 
 .contact-subtitle {
@@ -1158,7 +1202,7 @@ section {
 }
 
 .contact-card {
-    background: var(--card-background);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.68) 0%, rgba(245, 245, 247, 0.56) 100%);
     padding: 40px 30px;
     border-radius: var(--border-radius);
     text-align: center;
@@ -1169,6 +1213,10 @@ section {
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    backdrop-filter: saturate(145%) blur(10px);
+    -webkit-backdrop-filter: saturate(145%) blur(10px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.36);
 }
 
 .contact-card:hover {
@@ -1180,6 +1228,12 @@ section {
 [data-theme="dark"] .contact-card:hover {
     background: #2d2d2d;
     box-shadow: 0 25px 50px rgba(41, 151, 255, 0.25);
+}
+
+[data-theme="dark"] .contact-card {
+    background: linear-gradient(160deg, rgba(38, 38, 42, 0.66) 0%, rgba(26, 26, 30, 0.58) 100%);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .contact-card svg {
@@ -1470,7 +1524,29 @@ section {
     }
 
     .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
         padding: 15px;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        gap: 0;
+        justify-content: space-between;
+    }
+
+    .navbar {
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] .navbar {
+        background: rgba(29, 29, 31, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
     .mobile-menu-toggle {
@@ -1586,6 +1662,10 @@ section {
 
     section {
         padding: 60px 15px;
+    }
+
+    .contact {
+        padding-top: 52px;
     }
 
     .hero {
@@ -1825,6 +1905,10 @@ section {
         padding: 50px 12px;
     }
 
+    .contact {
+        padding-top: 44px;
+    }
+
     .hero {
         padding: 55px 12px 30px;
     }
@@ -2036,9 +2120,11 @@ section {
     border-radius: 0 !important;
     padding: 0 !important;
     color: var(--text-primary) !important;
-    font-size: 0.95rem !important;
-    font-weight: 400 !important;
-    opacity: 0.8;
+    font-size: 1.02rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.35px;
+    font-family: var(--font-display) !important;
+    opacity: 0.95;
     position: relative;
     display: inline-block !important;
     vertical-align: baseline !important;
