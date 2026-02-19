@@ -1051,6 +1051,19 @@ section {
 .project-card:nth-child(4) .project-header { background: linear-gradient(135deg, #E34F26 0%, #F06529 100%); } /* Portfolio - Orange/Red */
 .project-card:nth-child(5) .project-header { background: linear-gradient(135deg, #3776AB 0%, #5A9FD4 100%); } /* NeuroCynx - Blue */
 
+[data-theme="dark"] .project-card:nth-child(2) .project-header {
+    background: linear-gradient(135deg, #1f2a44 0%, #2f4f8a 55%, #3b82f6 100%);
+}
+
+[data-theme="dark"] .project-card:nth-child(2) .project-icon,
+[data-theme="dark"] .project-card:nth-child(3) .project-icon {
+    filter: brightness(0) invert(1) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    padding: 8px;
+}
+
 .project-header::before {
     content: '';
     position: absolute;
@@ -1060,6 +1073,10 @@ section {
 }
 [data-theme="dark"] .project-header::before {
     background: rgba(0,0,0,0.6); /* Dark mode overlay */
+}
+
+[data-theme="dark"] .project-card:nth-child(2) .project-header::before {
+    background: rgba(0,0,0,0.35);
 }
 
 /* Contact Section */
@@ -1076,9 +1093,9 @@ section {
 
 .contact-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    max-width: 1000px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -1320,6 +1337,26 @@ section {
 .tech-item[data-tech="github"] svg { color: #181717; }
 
 [data-theme="dark"] .tech-item[data-tech="github"] svg { color: #ffffff; }
+
+.tech-item[data-tech="github"] img.tech-icon {
+    filter: brightness(0) saturate(100%);
+}
+
+[data-theme="dark"] .tech-item[data-tech="github"] img.tech-icon {
+    filter: brightness(0) invert(1);
+}
+
+[data-theme="dark"] .tech-item[data-tech="aws"] img.tech-icon {
+    filter: brightness(0) invert(1) contrast(1.05) drop-shadow(0 3px 8px rgba(255, 255, 255, 0.18));
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+[data-theme="dark"] .tech-item[data-tech="aws"]:hover img.tech-icon {
+    filter: brightness(0) invert(1) contrast(1.1) drop-shadow(0 5px 10px rgba(41, 151, 255, 0.35));
+}
 
 /* Animation for tech items */
 .tech-item:nth-child(1) { animation-delay: 0.1s; }
