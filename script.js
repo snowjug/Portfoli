@@ -320,7 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initSynapseBackground();
 
     const reduceMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const disableHeavyMotion = reduceMotion || window.innerWidth <= 768;
+    const isMobileViewport = globalThis.innerWidth <= 768;
+    const disableHeavyMotion = reduceMotion;
+    const disableParallax = reduceMotion || isMobileViewport;
 
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavMenu = document.getElementById('mobileNavMenu');
@@ -337,6 +339,23 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuToggle.addEventListener('click', () => {
             const isOpen = document.body.classList.contains('mobile-nav-open');
             setMobileMenuState(!isOpen);
+        });
+
+        document.addEventListener('pointerdown', (event) => {
+            if (!document.body.classList.contains('mobile-nav-open')) {
+                return;
+            }
+
+            const target = event.target;
+            if (!(target instanceof Element)) {
+                return;
+            }
+
+            if (mobileNavMenu.contains(target) || mobileMenuToggle.contains(target)) {
+                return;
+            }
+
+            setMobileMenuState(false);
         });
 
         mobileNavOverlay.addEventListener('click', () => {
@@ -423,8 +442,10 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.transition = 'none';
         } else {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            el.style.transform = isMobileViewport ? 'translateY(16px)' : 'translateY(30px)';
+            el.style.transition = isMobileViewport
+                ? 'all 0.45s cubic-bezier(0.4, 0, 0.2, 1)'
+                : 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
             observer.observe(el);
         }
     });
@@ -470,8 +491,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const hero = document.querySelector('.hero-content');
 
     function updateParallax() {
-        if (!hero || disableHeavyMotion) {
-            if (hero && disableHeavyMotion) {
+        if (!hero || disableParallax) {
+            if (hero && disableParallax) {
                 hero.style.transform = 'none';
                 hero.style.opacity = '1';
             }
