@@ -10,11 +10,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <canvas id="synapseCanvas" class="synapse-bg"></canvas>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo" style="text-decoration: none;">Portfolio</a>
-            <ul class="nav-menu">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileNavMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="mobileNavMenu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -38,6 +45,7 @@
                 </svg>
             </button>
         </div>
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
     </nav>
 
     <!-- Hero Section -->

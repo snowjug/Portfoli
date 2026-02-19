@@ -10,7 +10,7 @@
     --secondary-color: #1d1d1f;
     --accent-color: #0071e3;
     --text-primary: #1d1d1f;
-    --text-secondary: #6e6e73;
+    --text-secondary: #1d1d1f;
     --background: #ffffff;
     --card-background: #f5f5f7;
     --border-radius: 18px;
@@ -39,6 +39,25 @@ body {
     color: var(--text-primary);
     background: var(--background);
     overflow-x: hidden;
+    position: relative;
+}
+
+.synapse-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+.hero-content,
+.scroll-indicator,
+section > .container,
+.footer .container {
+    position: relative;
+    z-index: 2;
 }
 
 .container {
@@ -86,6 +105,38 @@ body {
     list-style: none;
     gap: 40px;
     align-items: center;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.mobile-menu-toggle:hover {
+    background: var(--card-background);
+}
+
+.mobile-menu-toggle span {
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: var(--transition);
+}
+
+.mobile-nav-overlay {
+    display: none;
 }
 
 .nav-menu a {
@@ -1314,33 +1365,96 @@ section {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        font-size: 17px;
+        line-height: 1.7;
+    }
+
+    body.mobile-nav-open {
+        overflow: hidden;
+    }
+
     .nav-container {
         padding: 15px;
     }
 
+    .mobile-menu-toggle {
+        display: inline-flex;
+        order: 2;
+    }
+
+    .theme-toggle {
+        order: 3;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
     .nav-menu {
-        gap: 12px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(78vw, 320px);
+        height: 100vh;
+        margin: 0;
+        padding: 90px 24px 24px;
+        background: rgba(255, 255, 255, 0.96);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.12);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 22px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1102;
+    }
+
+    [data-theme="dark"] .nav-menu {
+        background: rgba(20, 20, 24, 0.95);
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+    }
+
+    body.mobile-nav-open .nav-menu {
+        transform: translateX(0);
+    }
+
+    .mobile-nav-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 1101;
+    }
+
+    body.mobile-nav-open .mobile-nav-overlay {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .nav-menu li {
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
     .nav-menu a,
     .yayy-btn {
-        font-size: 0.85rem;
-        padding: 8px 0;
+        font-size: 1.05rem;
+        padding: 10px 0;
         min-height: 44px;
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
-    .theme-toggle {
-        min-width: 44px;
-        min-height: 44px;
+    .yayy-btn {
+        justify-content: flex-start !important;
     }
 
     section {
@@ -1364,7 +1478,7 @@ section {
     }
 
     .hero-description {
-        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        font-size: clamp(1rem, 3.5vw, 1.15rem);
         margin-bottom: 30px;
         padding: 0 10px;
     }
@@ -1421,13 +1535,13 @@ section {
 
     .quick-link-card {
         padding: 10px 14px;
-        font-size: 0.8rem;
+        font-size: 0.95rem;
         min-height: 44px;
         gap: 8px;
     }
 
     .quick-link-card span {
-        font-size: 0.8rem;
+        font-size: 0.95rem;
     }
 
     .quick-link-card svg {
@@ -1493,7 +1607,7 @@ section {
 
     .cert-download {
         padding: 8px 16px;
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 
     .cert-download svg {
@@ -1503,7 +1617,15 @@ section {
 
     .credly-button {
         padding: 10px 20px;
-        font-size: 0.85rem;
+        font-size: 0.95rem;
+    }
+
+    .about-text p,
+    .project-content p,
+    .contact-card p,
+    .cert-issuer,
+    .cert-id {
+        font-size: 1rem;
     }
 
     .credly-button svg {
@@ -1550,6 +1672,10 @@ section {
 }
 
 @media (max-width: 480px) {
+    body {
+        font-size: 16px;
+    }
+
     .nav-container {
         padding: 12px;
     }
@@ -1559,13 +1685,13 @@ section {
     }
 
     .nav-menu {
-        gap: 8px;
-        justify-content: flex-end;
+        width: min(84vw, 320px);
+        gap: 18px;
     }
 
     .nav-menu a,
     .yayy-btn {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     section {
@@ -1626,7 +1752,17 @@ section {
     }
 
     .hero-description {
-        font-size: clamp(0.85rem, 2.5vw, 1rem);
+        font-size: clamp(0.95rem, 3vw, 1.05rem);
+    }
+
+    .about-text p,
+    .project-content p,
+    .contact-card p,
+    .cert-issuer,
+    .cert-id,
+    .quick-link-card,
+    .quick-link-card span {
+        font-size: 0.98rem;
     }
 
     .profile-image-wrapper {

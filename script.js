@@ -166,6 +166,125 @@ if (portfolioLogo) {
     });
 }
 
+function initSynapseBackground() {
+    const canvas = document.getElementById('synapseCanvas');
+    if (!canvas) return;
+
+    const reduceMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+        canvas.style.display = 'none';
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let nodes = [];
+    let animationFrameId;
+    let lastFrameTime = 0;
+
+    function isMobileViewport() {
+        return globalThis.innerWidth <= 768;
+    }
+
+    function getNodeCount() {
+        return isMobileViewport() ? 40 : 72;
+    }
+
+    function getLinkDistance() {
+        return isMobileViewport() ? 110 : 160;
+    }
+
+    function createNodes() {
+        const count = getNodeCount();
+        nodes = Array.from({ length: count }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            radius: Math.random() * 1.8 + 0.6
+        }));
+    }
+
+    function resizeCanvas() {
+        const dpr = globalThis.devicePixelRatio || 1;
+        width = globalThis.innerWidth;
+        height = globalThis.innerHeight;
+
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        createNodes();
+    }
+
+    function draw(timestamp) {
+        if (timestamp - lastFrameTime < 33) {
+            animationFrameId = globalThis.requestAnimationFrame(draw);
+            return;
+        }
+        lastFrameTime = timestamp;
+
+        const isDark = document.documentElement.dataset.theme === 'dark';
+        const nodeColor = isDark ? 'rgba(120, 185, 255, 0.55)' : 'rgba(0, 113, 227, 0.45)';
+        const linkBaseColor = isDark ? '120, 185, 255' : '0, 113, 227';
+        const maxDistance = getLinkDistance();
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < nodes.length; i += 1) {
+            const node = nodes[i];
+
+            node.x += node.vx;
+            node.y += node.vy;
+
+            if (node.x <= 0 || node.x >= width) node.vx *= -1;
+            if (node.y <= 0 || node.y >= height) node.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+            ctx.fillStyle = nodeColor;
+            ctx.fill();
+
+            for (let j = i + 1; j < nodes.length; j += 1) {
+                const other = nodes[j];
+                const dx = node.x - other.x;
+                const dy = node.y - other.y;
+                const distance = Math.hypot(dx, dy);
+
+                if (distance < maxDistance) {
+                    const alpha = ((maxDistance - distance) / maxDistance) ** 2 * 0.35;
+                    ctx.beginPath();
+                    ctx.moveTo(node.x, node.y);
+                    ctx.lineTo(other.x, other.y);
+                    ctx.strokeStyle = `rgba(${linkBaseColor}, ${alpha})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        animationFrameId = globalThis.requestAnimationFrame(draw);
+    }
+
+    resizeCanvas();
+    animationFrameId = globalThis.requestAnimationFrame(draw);
+    globalThis.addEventListener('resize', resizeCanvas);
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            globalThis.cancelAnimationFrame(animationFrameId);
+            return;
+        }
+
+        animationFrameId = globalThis.requestAnimationFrame(draw);
+    });
+}
+
 // Smooth scroll for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -198,8 +317,50 @@ const observer = new IntersectionObserver((entries) => {
 
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', () => {
+    initSynapseBackground();
+
     const reduceMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const disableHeavyMotion = reduceMotion || window.innerWidth <= 768;
+
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNavMenu = document.getElementById('mobileNavMenu');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+
+    function setMobileMenuState(isOpen) {
+        document.body.classList.toggle('mobile-nav-open', isOpen);
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
+        }
+    }
+
+    if (mobileMenuToggle && mobileNavMenu && mobileNavOverlay) {
+        mobileMenuToggle.addEventListener('click', () => {
+            const isOpen = document.body.classList.contains('mobile-nav-open');
+            setMobileMenuState(!isOpen);
+        });
+
+        mobileNavOverlay.addEventListener('click', () => {
+            setMobileMenuState(false);
+        });
+
+        mobileNavMenu.querySelectorAll('a, button').forEach(item => {
+            item.addEventListener('click', () => {
+                setMobileMenuState(false);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                setMobileMenuState(false);
+            }
+        });
+
+        globalThis.addEventListener('resize', () => {
+            if (globalThis.innerWidth > 768) {
+                setMobileMenuState(false);
+            }
+        });
+    }
 
     // Yayy! Button Confetti
     const confettiBtn = document.getElementById('confettiBtn');
