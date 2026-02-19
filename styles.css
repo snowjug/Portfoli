@@ -726,7 +726,7 @@ section {
 }
 
 .skill-item {
-    background: var(--card-background);
+    background: var(--background);
     padding: 40px 30px;
     border-radius: var(--border-radius);
     transition: var(--transition);
@@ -748,31 +748,18 @@ section {
 }
 
 .skill-item::after {
-    content: '';
-    position: absolute;
-    inset: -25%;
-    background: radial-gradient(circle at 50% 65%, rgba(0, 113, 227, 0.16) 0%, rgba(0, 113, 227, 0.08) 35%, transparent 70%);
-    opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 0.28s ease, transform 0.28s ease;
-    pointer-events: none;
-    z-index: 0;
+    content: none;
 }
 
 .skill-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 34px rgba(0, 113, 227, 0.16);
-    border-color: rgba(0, 113, 227, 0.28);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 113, 227, 0.2);
+    border-color: var(--accent-color);
 }
 
 [data-theme="dark"] .skill-item:hover {
-    box-shadow: 0 16px 34px rgba(41, 151, 255, 0.24);
-    border-color: rgba(41, 151, 255, 0.34);
-}
-
-.skill-item:hover::after {
-    opacity: 1;
-    transform: scale(1);
+    box-shadow: 0 20px 50px rgba(41, 151, 255, 0.25);
+    border-color: var(--accent-color);
 }
 
 .skill-item h3 {
