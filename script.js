@@ -227,6 +227,30 @@ window.addEventListener('scroll', () => {
 
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', () => {
+    // Yayy! Button Confetti
+    const confettiBtn = document.getElementById('confettiBtn');
+    if (confettiBtn) {
+        confettiBtn.addEventListener('click', () => {
+            // Confetti Cannon 1
+            confetti({
+                origin: { x: 0.2, y: 0.6 },
+                angle: 60,
+                spread: 55,
+                particleCount: 150,
+                colors: ['#FF69B4', '#FF1493', '#00BFFF', '#FFD700']
+            });
+
+            // Confetti Cannon 2
+            confetti({
+                origin: { x: 0.8, y: 0.6 },
+                angle: 120,
+                spread: 55,
+                particleCount: 150,
+                colors: ['#FF69B4', '#FF1493', '#00BFFF', '#FFD700']
+            });
+        });
+    }
+
     // Smooth Reveal Animation for Name
     const typingText = document.querySelector('.typing-text');
     if (typingText) {

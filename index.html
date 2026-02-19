@@ -13,12 +13,13 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">Portfolio</div>
+            <a href="#home" class="nav-logo" style="text-decoration: none;">Portfolio</a>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><button id="confettiBtn" class="yayy-btn">Yayy! 🎉</button></li>
             </ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                 <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -298,6 +299,64 @@
                         Download Certificate
                     </a>
                 </div>
+                <!-- Cisco Certificate -->
+                <div class="cert-card">
+                    <div class="cert-badge cisco-badge" style="background: #ffffff; border: 2px solid #e5e5e5; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 64 32" style="width: 48px; height: auto;">
+                            <path fill="#00bceb" d="M9 22h3v-6H9v6zm7 0h3v-10h-3v10zm7 0h3v-14h-3v14zm7 0h3v-18h-3v18zm7 0h3v-14h-3v14zm7 0h3v-10h-3v10zm7 0h3v-6h-3v6z"/>
+                        </svg>
+                    </div>
+                    <h3>Cisco Certified Cybersecurity Technician</h3>
+                    <p class="cert-issuer">Cisco</p>
+                    <p class="cert-id">CCST Cybersecurity</p>
+                    <a href="Cisco_CCST_Certificate.pdf" class="cert-download" download>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Certificate
+                    </a>
+                </div>
+                <!-- Google Cloud Certificate -->
+                <div class="cert-card">
+                    <div class="cert-badge google-badge" style="background: #ffffff; border: 2px solid #e5e5e5; display: flex; align-items: center; justify-content: center;">
+                        <img src="svg/Google-Cloud.svg" alt="Google Cloud" style="width: 48px; height: 48px;">
+                    </div>
+                    <h3>Google Cloud Professional Architect</h3>
+                    <p class="cert-issuer">Google Cloud</p>
+                    <p class="cert-id">Professional Architect</p>
+                    <a href="Google Cloud Professional Certificate.pdf" class="cert-download" download>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Certificate
+                    </a>
+                </div>
+                <!-- Microsoft SC-900 Certificate -->
+                <div class="cert-card">
+                    <div class="cert-badge microsoft-badge">
+                        <svg viewBox="0 0 23 23" fill="currentColor" width="48" height="48">
+                            <path fill="#f35325" d="M0 0h11v11H0z"/>
+                            <path fill="#81bc06" d="M12 0h11v11H12z"/>
+                            <path fill="#05a6f0" d="M0 12h11v11H0z"/>
+                            <path fill="#ffba08" d="M12 12h11v11H12z"/>
+                        </svg>
+                    </div>
+                    <h3>Microsoft Certified Security, Compliance, and Identity Fundamentals</h3>
+                    <p class="cert-issuer">Microsoft</p>
+                    <p class="cert-id">SC-900</p>
+                    <a href="Microsoft Certified Security, Compliance, and Identity Fundamentals.pdf" class="cert-download" download>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Certificate
+                    </a>
+                </div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="https://www.credly.com/users/snowjug" target="_blank" rel="noopener noreferrer" class="credly-button">
@@ -316,46 +375,121 @@
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
             <div class="projects-grid">
+                
+                <!-- Project 1: OpenStack.sh -->
                 <a href="https://github.com/snowjug/OpenStack.sh" target="_blank" rel="noopener noreferrer" class="project-card">
-                    <div class="project-image">
-                        <img src="svg/OpenStack.svg" alt="OpenStack">
+                    <div class="project-header">
+                        <img src="svg/OpenStack.svg" alt="OpenStack" class="project-icon">
                     </div>
-                    <div class="project-overlay">
-                        <h3>OpenStack.sh</h3>
-                        <p>Automated OpenStack deployment and configuration scripts for cloud infrastructure management</p>
-                        <span class="project-link">View on GitHub →</span>
+                    <div class="project-content">
+                        <h3>
+                            OpenStack.sh
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </h3>
+                        <p>Automated deployment scripts for OpenStack cloud infrastructure, simplifying complex configurations.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Bash</span>
+                            <span class="project-tag">OpenStack</span>
+                            <span class="project-tag">Cloud</span>
+                        </div>
                     </div>
                 </a>
+
+                <!-- Project 2: Stickly -->
                 <a href="https://github.com/snowjug/stickly" target="_blank" rel="noopener noreferrer" class="project-card">
-                    <div class="project-image">
-                        <img src="svg/CircleCI.svg" alt="CI/CD">
+                    <div class="project-header">
+                        <img src="svg/CircleCI.svg" alt="DevOps" class="project-icon">
                     </div>
-                    <div class="project-overlay">
-                        <h3>Stickly</h3>
-                        <p>DevOps automation tool for streamlined deployment and infrastructure orchestration</p>
-                        <span class="project-link">View on GitHub →</span>
+                    <div class="project-content">
+                        <h3>
+                            Stickly
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </h3>
+                        <p>A comprehensive DevOps automation tool designed for streamlined deployment and orchestration.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">CI/CD</span>
+                            <span class="project-tag">Automation</span>
+                            <span class="project-tag">DevOps</span>
+                        </div>
                     </div>
                 </a>
+
+                <!-- Project 3: CoinDonation -->
                 <a href="https://github.com/snowjug/CoinDonation" target="_blank" rel="noopener noreferrer" class="project-card">
-                    <div class="project-image">
-                        <img src="svg/Bash.svg" alt="Terminal">
+                    <div class="project-header">
+                        <img src="svg/Bash.svg" alt="Blockchain" class="project-icon">
                     </div>
-                    <div class="project-overlay">
-                        <h3>CoinDonation</h3>
-                        <p>Cryptocurrency donation platform with secure CI/CD pipeline and containerized deployment</p>
-                        <span class="project-link">View on GitHub →</span>
+                    <div class="project-content">
+                        <h3>
+                            CoinDonation
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </h3>
+                        <p>Secure cryptocurrency donation platform featuring a robust CI/CD pipeline and containerized deployment.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Blockchain</span>
+                            <span class="project-tag">Docker</span>
+                            <span class="project-tag">Security</span>
+                        </div>
                     </div>
                 </a>
+
+                <!-- Project 4: Portfolio -->
                 <a href="https://github.com/snowjug/Portfoli" target="_blank" rel="noopener noreferrer" class="project-card">
-                    <div class="project-image">
-                        <img src="svg/HTML5.svg" alt="HTML">
+                    <div class="project-header">
+                        <img src="svg/HTML5.svg" alt="Web" class="project-icon">
                     </div>
-                    <div class="project-overlay">
-                        <h3>Portfolio Website</h3>
-                        <p>Professional portfolio showcasing DevSecOps expertise with modern design and interactive features</p>
-                        <span class="project-link">View on GitHub →</span>
+                    <div class="project-content">
+                        <h3>
+                            Portfolio Website
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </h3>
+                        <p>A modern, interactive portfolio showcasing DevSecOps expertise with responsive design.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">HTML5/CSS3</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Design</span>
+                        </div>
                     </div>
                 </a>
+
+                <!-- Project 5: NeuroCynx -->
+                <a href="https://github.com/snowjug/NeuroCynx" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-header">
+                        <img src="svg/Python.svg" alt="AI" class="project-icon">
+                    </div>
+                    <div class="project-content">
+                        <h3>
+                            NeuroCynx
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </h3>
+                        <p>Advanced neural network architecture designed for complex cognitive modeling and pattern recognition.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">AI/ML</span>
+                            <span class="project-tag">Neural Networks</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 6: Placely.ai -->
+                <a href="https://github.com/snowjug/placely.ai" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-header">
+                        <img src="svg/React.svg" alt="App" class="project-icon">
+                    </div>
+                    <div class="project-content">
+                        <h3>
+                            Placely.ai
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </h3>
+                        <p>Revolutionizing Placement Preparation with AI. Intelligent Dashboard, AI Interview Coach, Smart MCQ Quizzes.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">AI/ML</span>
+                            <span class="project-tag">Node.js</span>
+                        </div>
+                    </div>
+                </a>
+
             </div>
         </div>
     </section>

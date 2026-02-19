@@ -1,4 +1,4 @@
-/* Reset & Base Styles */
+﻿/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -85,6 +85,7 @@ body {
     display: flex;
     list-style: none;
     gap: 40px;
+    align-items: center;
 }
 
 .nav-menu a {
@@ -830,52 +831,76 @@ section {
 /* Projects Section */
 .projects {
     background: var(--background);
-    padding: 80px 20px;
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.projects::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 113, 227, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+[data-theme="dark"] .projects::before {
+    background: radial-gradient(circle, rgba(41, 151, 255, 0.08) 0%, transparent 70%);
 }
 
 .projects .section-title {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    margin-bottom: 40px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
 }
 
 .projects-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 800px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .project-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px 24px;
     background: var(--card-background);
-    border-radius: 12px;
+    border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: hidden;
     text-decoration: none;
     color: var(--text-primary);
-    transition: var(--transition);
-    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+[data-theme="dark"] .project-card {
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .project-card:hover {
-    transform: translateX(10px) translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 113, 227, 0.2);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 113, 227, 0.4), inset 0 0 0 1px rgba(0, 113, 227, 0.5);
     border-color: var(--accent-color);
 }
 
 [data-theme="dark"] .project-card:hover {
-    box-shadow: 0 8px 30px rgba(41, 151, 255, 0.25);
+    box-shadow: 0 0 20px rgba(41, 151, 255, 0.4), inset 0 0 0 1px rgba(41, 151, 255, 0.5);
 }
 
-.project-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 10px;
-    background: var(--accent-color);
-    flex-shrink: 0;
+.project-header {
+    height: 160px;
+    background: linear-gradient(135deg, #f5f5f7 0%, #e1e1e6 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -883,67 +908,107 @@ section {
     overflow: hidden;
 }
 
-.project-image::before {
+[data-theme="dark"] .project-header {
+    background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+}
+
+.project-header::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+    background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
 }
 
-.project-image img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
+.project-icon {
+    width: 64px;
+    height: 64px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    transition: transform 0.5s ease;
+    z-index: 2;
 }
 
-.project-card:nth-child(1) .project-image {
-    background: linear-gradient(135deg, #0071e3 0%, #005bb5 100%);
+.project-card:hover .project-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 10px var(--accent-color));
 }
 
-.project-card:nth-child(2) .project-image {
-    background: linear-gradient(135deg, #00a0dc 0%, #0077c0 100%);
-}
-
-.project-card:nth-child(3) .project-image {
-    background: linear-gradient(135deg, #0089d6 0%, #006bb3 100%);
-}
-
-.project-overlay {
-    flex: 1;
+.project-content {
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    flex-grow: 1;
 }
 
-.project-overlay h3 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.project-overlay p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.4;
-}
-
-.project-link {
-    display: inline-flex;
+.project-content h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    display: flex;
     align-items: center;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--accent-color);
-    margin-top: 4px;
+    justify-content: space-between;
+}
+
+.project-content h3 svg {
+    width: 20px;
+    height: 20px;
     opacity: 0;
     transform: translateX(-10px);
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    color: var(--accent-color);
 }
 
-.project-card:hover .project-link {
+.project-card:hover h3 svg {
     opacity: 1;
     transform: translateX(0);
+}
+
+.project-content p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.project-tag {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    background: rgba(0, 113, 227, 0.1);
+    color: var(--accent-color);
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .project-tag {
+    background: rgba(41, 151, 255, 0.15);
+    color: #4da3ff;
+}
+
+/* Specific Project Gradients */
+.project-card:nth-child(1) .project-header { background: linear-gradient(135deg, #FF9900 0%, #FFCC00 100%); } /* OpenStack - Orange */
+.project-card:nth-child(2) .project-header { background: linear-gradient(135deg, #343434 0%, #5d5d5d 100%); } /* Stickly - Dark */
+.project-card:nth-child(3) .project-header { background: linear-gradient(135deg, #4EAA25 0%, #87CD33 100%); } /* CoinDonation - Green */
+.project-card:nth-child(4) .project-header { background: linear-gradient(135deg, #E34F26 0%, #F06529 100%); } /* Portfolio - Orange/Red */
+.project-card:nth-child(5) .project-header { background: linear-gradient(135deg, #3776AB 0%, #5A9FD4 100%); } /* NeuroCynx - Blue */
+
+.project-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.85); /* Light mode overlay to soften */
+    z-index: 1;
+}
+[data-theme="dark"] .project-header::before {
+    background: rgba(0,0,0,0.6); /* Dark mode overlay */
 }
 
 /* Contact Section */
@@ -1763,4 +1828,73 @@ section {
         left: -10px;
     }
 
+}
+/* RESET Yayy Button to look like Nav Link */
+.yayy-btn {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    color: var(--text-primary) !important;
+    font-size: 0.95rem !important;
+    font-weight: 400 !important;
+    opacity: 0.8;
+    position: relative;
+    display: inline-block !important;
+    vertical-align: baseline !important;
+    line-height: inherit !important;
+    height: auto !important;
+    width: auto !important;
+}
+
+.yayy-btn:hover {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1;
+    color: var(--accent-color) !important;
+    box-shadow: none !important;
+}
+
+.yayy-btn:active {
+    transform: none !important;
+}
+
+/* Add underline effect to Yayy button */
+.yayy-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--accent-color);
+    transition: var(--transition);
+}
+
+.yayy-btn:hover::after {
+    width: 100%;
+}
+
+/* Placely.ai Gradient */
+.project-card:nth-child(6) .project-header {
+    background: linear-gradient(135deg, #61DAFB 0%, #9B5DE5 100%) !important;
+}
+
+/* New Interactive Effect for Project Cards */
+.project-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    border: 1px solid transparent;
+}
+
+.project-card:hover {
+    transform: scale(1.02) !important;
+    box-shadow: 0 0 0 1px var(--accent-color), 0 8px 30px rgba(0,0,0,0.12) !important;
+    background: var(--card-background);
+    z-index: 10;
+}
+
+[data-theme='dark'] .project-card:hover {
+    box-shadow: 0 0 0 1px var(--accent-color), 0 8px 30px rgba(0,0,0,0.5) !important;
 }
