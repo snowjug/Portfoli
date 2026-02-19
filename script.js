@@ -35,7 +35,7 @@ function drawSkillsRadar() {
     const angleStep = (Math.PI * 2) / numSkills;
     
     // Get theme colors
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const isDark = document.documentElement.dataset.theme === 'dark';
     const textColor = isDark ? '#f5f5f7' : '#1d1d1f';
     const gridColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)';
     const fillColor = isDark ? 'rgba(41, 151, 255, 0.3)' : 'rgba(0, 113, 227, 0.3)';
@@ -139,8 +139,10 @@ if (radarThemeToggle) {
 }
 
 // Redraw on window resize
+let radarResizeTimeout;
 window.addEventListener('resize', () => {
-    drawSkillsRadar();
+    clearTimeout(radarResizeTimeout);
+    radarResizeTimeout = setTimeout(drawSkillsRadar, 120);
 });
 
 // Confetti celebration for Portfolio logo
@@ -170,8 +172,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
+            const reduceMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
             target.scrollIntoView({
-                behavior: 'smooth',
+                behavior: reduceMotion ? 'auto' : 'smooth',
                 block: 'start'
             });
         }
@@ -193,61 +196,46 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Add hover effect for project cards
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-    });
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-content');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        hero.style.opacity = 1 - scrolled / 700;
-    }
-});
-
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', () => {
+    const reduceMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const disableHeavyMotion = reduceMotion || window.innerWidth <= 768;
+
     // Yayy! Button Confetti
     const confettiBtn = document.getElementById('confettiBtn');
     if (confettiBtn) {
         confettiBtn.addEventListener('click', () => {
-            // Confetti Cannon 1
-            confetti({
-                origin: { x: 0.2, y: 0.6 },
-                angle: 60,
-                spread: 55,
-                particleCount: 150,
+            const base = {
+                spread: 65,
+                startVelocity: reduceMotion ? 20 : 40,
+                ticks: reduceMotion ? 55 : 95,
+                gravity: 1.1,
+                scalar: 0.9,
                 colors: ['#FF69B4', '#FF1493', '#00BFFF', '#FFD700']
+            };
+
+            confetti({
+                ...base,
+                particleCount: reduceMotion ? 10 : 60,
+                angle: 60,
+                origin: { x: 0.1, y: 0.78 }
             });
 
-            // Confetti Cannon 2
             confetti({
-                origin: { x: 0.8, y: 0.6 },
+                ...base,
+                particleCount: reduceMotion ? 10 : 60,
                 angle: 120,
-                spread: 55,
-                particleCount: 150,
-                colors: ['#FF69B4', '#FF1493', '#00BFFF', '#FFD700']
+                origin: { x: 0.9, y: 0.78 }
             });
+
+            setTimeout(() => {
+                confetti({
+                    ...base,
+                    particleCount: reduceMotion ? 5 : 30,
+                    angle: 90,
+                    origin: { x: 0.5, y: 0.72 }
+                });
+            }, 120);
         });
     }
 
@@ -268,10 +256,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const animateElements = document.querySelectorAll('.skill-item, .project-card, .contact-card, .about-text, .cert-card');
     
     animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(el);
+        if (disableHeavyMotion) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.transition = 'none';
+        } else {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        }
     });
 
     // Dark Mode Toggle
@@ -281,11 +275,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check for saved theme preference or default to 'light' mode
     const savedTheme = localStorage.getItem('theme') || 'light';
-    htmlElement.setAttribute('data-theme', savedTheme);
+    htmlElement.dataset.theme = savedTheme;
     
     // Update navbar background based on theme and scroll
     function updateNavbarBackground() {
-        const isDark = htmlElement.getAttribute('data-theme') === 'dark';
+        const isDark = htmlElement.dataset.theme === 'dark';
         const currentScroll = window.pageYOffset;
         
         if (navbar) {
@@ -300,10 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Toggle theme
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
+            const currentTheme = htmlElement.dataset.theme;
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             
-            htmlElement.setAttribute('data-theme', newTheme);
+            htmlElement.dataset.theme = newTheme;
             localStorage.setItem('theme', newTheme);
             updateNavbarBackground();
         });
@@ -312,8 +306,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize navbar background
     updateNavbarBackground();
     
-    // Update navbar on scroll
-    window.addEventListener('scroll', updateNavbarBackground);
+    const hero = document.querySelector('.hero-content');
+
+    function updateParallax() {
+        if (!hero || disableHeavyMotion) {
+            if (hero && disableHeavyMotion) {
+                hero.style.transform = 'none';
+                hero.style.opacity = '1';
+            }
+            return;
+        }
+
+        const scrolled = window.pageYOffset;
+        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        hero.style.opacity = String(Math.max(0, 1 - scrolled / 700));
+    }
 
     // Active Section Indicator
     const sections = document.querySelectorAll('section[id]');
@@ -338,27 +345,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Set active link on scroll
-    window.addEventListener('scroll', setActiveLink);
+    let ticking = false;
+    function onScroll() {
+        if (ticking) {
+            return;
+        }
+
+        ticking = true;
+        globalThis.requestAnimationFrame(() => {
+            updateNavbarBackground();
+            setActiveLink();
+            updateParallax();
+            ticking = false;
+        });
+    }
+
+    // Use a single scroll pipeline to reduce layout work
+    window.addEventListener('scroll', onScroll, { passive: true });
     
     // Set active link on page load
+    updateParallax();
     setActiveLink();
+
+    // Initialize visitor stats as soon as DOM is ready
+    initVisitorStats();
 });
+
+let currentVisitorCount = 0;
 
 // Visitor Counter and Graph
 function initVisitorStats() {
-    // Get or initialize visitor count from localStorage
-    let visitorCount = localStorage.getItem('visitorCount');
-    let visitHistory = JSON.parse(localStorage.getItem('visitHistory') || '[]');
-    
-    if (!visitorCount) {
-        visitorCount = Math.floor(Math.random() * 500) + 100; // Start with random count
-    } else {
-        visitorCount = parseInt(visitorCount) + 1;
-    }
-    
-    // Save updated count
-    localStorage.setItem('visitorCount', visitorCount);
+    const MIN_VISITOR_COUNT = 100;
+    const MAX_VISITOR_COUNT = 499;
+
+    const visitorCount = Math.floor(Math.random() * (MAX_VISITOR_COUNT - MIN_VISITOR_COUNT + 1)) + MIN_VISITOR_COUNT;
+    currentVisitorCount = visitorCount;
     
     // Update visitor count display
     const countElement = document.getElementById('visitorCount');
@@ -415,7 +436,7 @@ function drawVisitorGraph(targetCount) {
     ctx.imageSmoothingQuality = 'high';
     
     // Get theme colors
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const isDark = document.documentElement.dataset.theme === 'dark';
     const textColor = isDark ? '#f5f5f7' : '#1d1d1f';
     const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
     const lineColor = '#0071e3';
@@ -469,7 +490,7 @@ function drawVisitorGraph(targetCount) {
         ctx.lineTo(point.x, point.y);
     });
     
-    ctx.lineTo(curvePoints[curvePoints.length - 1].x, height - padding);
+    ctx.lineTo(curvePoints.at(-1).x, height - padding);
     ctx.closePath();
     ctx.fillStyle = fillColor;
     ctx.fill();
@@ -489,7 +510,7 @@ function drawVisitorGraph(targetCount) {
     ctx.stroke();
     
     // Draw end point circle
-    const endPoint = curvePoints[curvePoints.length - 1];
+    const endPoint = curvePoints.at(-1);
     ctx.beginPath();
     ctx.arc(endPoint.x, endPoint.y, 6, 0, Math.PI * 2);
     ctx.fillStyle = lineColor;
@@ -505,15 +526,12 @@ function drawVisitorGraph(targetCount) {
     ctx.fillText('Growth Trajectory', padding, 20);
 }
 
-// Initialize visitor stats on page load
-window.addEventListener('load', initVisitorStats);
-
 // Redraw graph on theme change
 const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
     themeToggle.addEventListener('click', () => {
         setTimeout(() => {
-            const visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+            const visitorCount = currentVisitorCount >= 100 && currentVisitorCount <= 499 ? currentVisitorCount : 100;
             drawVisitorGraph(visitorCount);
         }, 100);
     });

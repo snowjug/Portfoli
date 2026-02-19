@@ -713,7 +713,7 @@ section {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-color), #00a0dc);
+    background: linear-gradient(135deg, #0057c2, #007fd4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -807,7 +807,7 @@ section {
     align-items: center;
     gap: 10px;
     padding: 14px 32px;
-    background: linear-gradient(135deg, var(--accent-color), #00a8ff);
+    background: linear-gradient(135deg, #0057c2, #0082d9);
     color: white;
     text-decoration: none;
     border-radius: 50px;
@@ -989,8 +989,8 @@ section {
 }
 
 [data-theme="dark"] .project-tag {
-    background: rgba(41, 151, 255, 0.15);
-    color: #4da3ff;
+    background: rgba(20, 78, 130, 0.55);
+    color: #f2f8ff;
 }
 
 /* Specific Project Gradients */
@@ -1319,10 +1319,18 @@ section {
     }
 
     .nav-menu {
-        gap: 15px;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
 
-    .nav-menu a {
+    .nav-menu li {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-menu a,
+    .yayy-btn {
         font-size: 0.85rem;
         padding: 8px 0;
         min-height: 44px;
@@ -1474,56 +1482,18 @@ section {
     }
 
     .cert-badge {
-        width: 70px;
-        height: 70px;
-    }
-
-    .microsoft-badge svg {
-        width: 40px !important;
-        height: 40px !important;
-    }
-
-    .cert-download svg {
-        width: 16px !important;
-        height: 16px !important;
-    }
-
-    .credly-button svg {
-        width: 18px !important;
-        height: 18px !important;
-    }
-
-    .credly-button {
-        padding: 12px 24px;
-        font-size: 0.9rem;
-    }
-
-    .project-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 20px;
-    }
-
-    .project-image {
-        width: 70px;
-        height: 70px;
-    }
-
-    .project-image svg,
-    .project-image img {
-        width: 60px !important;
-        height: 60px !important;
-    }
-
-    .cert-badge {
-        width: 60px !important;
-        height: 60px !important;
+        width: 60px;
+        height: 60px;
     }
 
     .microsoft-badge svg {
         width: 32px !important;
         height: 32px !important;
+    }
+
+    .cert-download {
+        padding: 8px 16px;
+        font-size: 0.85rem;
     }
 
     .cert-download svg {
@@ -1541,27 +1511,13 @@ section {
         height: 16px !important;
     }
 
-    .contact-card svg {
-        width: 28px !important;
-        height: 28px !important;
+    .project-header {
+        height: 140px;
     }
 
-    .cert-download {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-    }
-
-    .credly-button {
-        padding: 12px 24px;
-        font-size: 0.9rem;
-    }
-
-    .project-overlay h3 {
-        font-size: 1.2rem;
-    }
-
-    .project-overlay p {
-        font-size: 0.9rem;
+    .project-icon {
+        width: 56px;
+        height: 56px;
     }
 
     .skills-viz-grid {
@@ -1588,28 +1544,8 @@ section {
     }
 
     .contact-card svg {
-        width: 32px !important;
-        height: 32px !important;
-    }
-
-    .cert-badge {
-        width: 70px;
-        height: 70px;
-    }
-
-    .microsoft-badge svg {
-        width: 40px !important;
-        height: 40px !important;
-    }
-
-    .cert-download svg {
-        width: 16px !important;
-        height: 16px !important;
-    }
-
-    .credly-button svg {
-        width: 18px !important;
-        height: 18px !important;
+        width: 28px !important;
+        height: 28px !important;
     }
 }
 
@@ -1623,10 +1559,12 @@ section {
     }
 
     .nav-menu {
-        gap: 10px;
+        gap: 8px;
+        justify-content: flex-end;
     }
 
-    .nav-menu a {
+    .nav-menu a,
+    .yayy-btn {
         font-size: 0.8rem;
     }
 
@@ -1661,15 +1599,13 @@ section {
         font-size: 0.8rem;
     }
 
-    .project-image {
-        width: 60px;
-        height: 60px;
+    .project-header {
+        height: 130px;
     }
 
-    .project-image svg,
-    .project-image img {
-        width: 50px !important;
-        height: 50px !important;
+    .project-icon {
+        width: 50px;
+        height: 50px;
     }
 
     #skillsRadar {
@@ -1882,19 +1818,14 @@ section {
     background: linear-gradient(135deg, #61DAFB 0%, #9B5DE5 100%) !important;
 }
 
-/* New Interactive Effect for Project Cards */
-.project-card {
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-    border: 1px solid transparent;
-}
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 
-.project-card:hover {
-    transform: scale(1.02) !important;
-    box-shadow: 0 0 0 1px var(--accent-color), 0 8px 30px rgba(0,0,0,0.12) !important;
-    background: var(--card-background);
-    z-index: 10;
-}
-
-[data-theme='dark'] .project-card:hover {
-    box-shadow: 0 0 0 1px var(--accent-color), 0 8px 30px rgba(0,0,0,0.5) !important;
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
