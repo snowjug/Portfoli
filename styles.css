@@ -431,7 +431,7 @@ section > .container,
 }
 
 .typing-text::after {
-    content: '|';
+    content: '!';
     animation: blink 0.8s infinite;
     margin-left: 2px;
     will-change: opacity;
