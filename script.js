@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Smooth Reveal Animation for Name
     const typingText = document.querySelector('.typing-text');
     if (typingText) {
-        const text = 'Atharv Shukla';
+        const text = ' Atharv Shukla ';
         typingText.textContent = text;
         typingText.style.opacity = '0';
         
